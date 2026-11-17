@@ -22,7 +22,7 @@ def run_simulation(config):
     all_algos = ["PID", "ADRC", "LQR", "MPC", "LQG", "FEEDFORWARD", "FUZZY", "ADAPTIVE"]
     algorithms = all_algos if "COMPARE_ALL" in [a.upper() for a in user_algos] else [a.upper() for a in user_algos if a.upper() in all_algos]
     
-    print(f"🚀 EXECUTING: {', '.join(algorithms)} on {scen['num_variables']}-DOF System: {scenario_key}")
+    print(f" EXECUTING: {', '.join(algorithms)} on {scen['num_variables']}-DOF System: {scenario_key}")
     
     num_vars = scen["num_variables"]
     setpoints_static = np.array(scen["target_setpoints"])
@@ -142,7 +142,7 @@ def plot_results(t, setpoints, results, disturbances, scen, algorithms):
     filename = f"images/{num_vars}DOF_{scen['scenario_name']}_{'_vs_'.join(algorithms)}.png"
     plt.tight_layout(rect=[0, 0, 1, 0.96])
     plt.savefig(filename)
-    print(f"\n✅ Graph saved as '{filename}'")
+    print(f"\nGraph saved as '{filename}'")
 
 if __name__ == "__main__":
     cfg = load_config()
