@@ -1,0 +1,48 @@
+# ==========================================
+# Ultimate Control System Benchmarking Config
+# ==========================================
+
+user_need:
+  # Options: drone_6_dof, drone_4_dof, self_balancing_bot, bipedal_walker_lipm
+  scenario_name: "drone_6_dof"
+  
+  # Choose algorithms to compare. Use ["COMPARE_ALL"] for all 8.
+  # Options: PID, ADRC, LQR, MPC, LQG, FEEDFORWARD, FUZZY, ADAPTIVE
+  selected_algorithms: ["PID", "ADRC", "MPC"]
+
+simulation_settings:
+  duration_seconds: 15.0
+  dt: 0.01
+
+scenarios:
+  drone_6_dof:
+    description: "Full 6-DOF Cascaded Flight Controller (Underactuated X/Y tied to Pitch/Roll)."
+    num_variables: 6
+    variable_names: ["X Position (m)", "Y Position (m)", "Z Altitude (m)", "Roll (rad)", "Pitch (rad)", "Yaw (rad)"]
+    target_setpoints: [5.0, 5.0, 10.0, 0.0, 0.0, 0.0]
+    disturbance_times: [5.0, 5.0, 5.0, 0.0, 0.0, 0.0]
+    disturbance_magnitudes: [-2.0, 3.0, -4.0, 0.0, 0.0, 0.0]
+
+  drone_4_dof:
+    description: "4-Variable Quadcopter Attitude & Altitude Control."
+    num_variables: 4
+    variable_names: ["Altitude (m)", "Roll (rad)", "Pitch (rad)", "Yaw (rad)"]
+    target_setpoints: [10.0, 0.0, 0.0, 0.0]
+    disturbance_times: [4.0, 4.0, 4.0, 0.0]
+    disturbance_magnitudes: [-5.0, 2.0, -1.5, 0.0]
+
+  self_balancing_bot:
+    description: "Two-wheeled balancing robot (Inverted Pendulum). Move forward, stay upright."
+    num_variables: 2
+    variable_names: ["Cart Position X (m)", "Body Pitch Angle (rad)"]
+    target_setpoints: [2.0, 0.0] 
+    disturbance_times: [5.0, 5.0]
+    disturbance_magnitudes: [0.0, 0.5] 
+
+  bipedal_walker_lipm:
+    description: "Bipedal Walking Robot using Linear Inverted Pendulum CoM Tracking."
+    num_variables: 2
+    variable_names: ["CoM Position X (m)", "CoM Height Z (m)"]
+    target_setpoints: [5.0, 1.0] 
+    disturbance_times: [6.0, 6.0]
+    disturbance_magnitudes: [-1.0, -0.2]
