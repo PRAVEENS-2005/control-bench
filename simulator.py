@@ -22,7 +22,7 @@ def run_simulation(config):
     all_algos = ["PID", "ADRC", "LQR", "MPC", "LQG", "FEEDFORWARD", "FUZZY", "ADAPTIVE"]
     algorithms = all_algos if "COMPARE_ALL" in [a.upper() for a in user_algos] else [a.upper() for a in user_algos if a.upper() in all_algos]
     
-    print(f" EXECUTING: {', '.join(algorithms)} on {scen['num_variables']}-DOF System: {scenario_key}")
+    print(f"🚀 EXECUTING: {', '.join(algorithms)} on {scen['num_variables']}-DOF System: {scenario_key}")
     
     num_vars = scen["num_variables"]
     setpoints_static = np.array(scen["target_setpoints"])
@@ -115,7 +115,7 @@ def plot_results(t, setpoints, results, disturbances, scen, algorithms):
         if num_vars == 1: axes = [axes]
     
     for v in range(num_vars):
-        if scen["scenario_name"] == "drone_6_dof" and v in [3, 4]:
+        if num_vars == 6 and v in [3, 4]:
             pass # Cascaded targets are dynamic, omit static dashed line
         else:
             axes[v].plot(t, np.full_like(t, setpoints[v]), 'k--', linewidth=1.5, label="Target Setpoint")
@@ -139,7 +139,7 @@ def plot_results(t, setpoints, results, disturbances, scen, algorithms):
     fig.suptitle(f"{num_vars}-DOF Benchmarking: {', '.join(algorithms)}", fontsize=16, fontweight="bold", y=0.98)
     
     os.makedirs("images", exist_ok=True)
-    filename = f"images/{num_vars}DOF_{scen['scenario_name']}_{'_vs_'.join(algorithms)}.png"
+    filename = f"images/{num_vars}DOF_benchmark_{'_vs_'.join(algorithms)}.png"
     plt.tight_layout(rect=[0, 0, 1, 0.96])
     plt.savefig(filename)
     print(f"\nGraph saved as '{filename}'")
